@@ -10,8 +10,8 @@ var env = process.env.NODE_ENV;
 var config = {
   context: path.join(__dirname, './client'),
   entry: {
-    main: './index.js',
-    vendor: [''];
+    main: './scripts/index.js',
+    //vendor: ['']
   },
   output: {
     path: path.join(__dirname, './dist'),
@@ -35,7 +35,7 @@ var config = {
   },
   postcss: [mixins, nested, simplevars, autoprefixer],
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    //new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env) }
     })
@@ -54,8 +54,10 @@ if (env === 'production') {
 
 if(env === 'development') {
   config.devServer = {
-    hot: true
+    hot: true,
+    contentBase: './client'
   }
+  config.devtool = "eval";
 }
 
 module.exports = config;
